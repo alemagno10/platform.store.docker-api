@@ -114,7 +114,7 @@ services:
     build:
       context: ../platform.store.products-resource/
       dockerfile: Dockerfile
-    image: store-product:latest
+    image: store-products:latest
     environment:
       - spring.datasource.url=jdbc:postgresql://store-db-store:5432/store
       - spring.datasource.username=store
