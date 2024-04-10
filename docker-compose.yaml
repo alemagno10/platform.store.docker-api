@@ -90,6 +90,22 @@ services:
       - db-store
       - discovery
 
+  auth:
+    build:
+      context: ../platform.store.auth-resource/
+      dockerfile: Dockerfile
+    image: store-auth:latest
+    environment:
+      - eureka.client.service-url.defaultZone=http://store-discovery:8761/eureka/
+    deploy:
+      mode: replicated
+      replicas: 1
+    networks:
+      - private-network
+    depends_on:
+      - discovery
+      - account
+
   partner:
     build:
       context: ../platform.store.partner-resource/
@@ -129,22 +145,6 @@ services:
     depends_on:
       - db-store
       - discovery
-
-  auth:
-    build:
-      context: ../platform.store.auth-resource/
-      dockerfile: Dockerfile
-    image: store-auth:latest
-    environment:
-      - eureka.client.service-url.defaultZone=http://store-discovery:8761/eureka/
-    deploy:
-      mode: replicated
-      replicas: 1
-    networks:
-      - private-network
-    depends_on:
-      - discovery
-      - account
 
 networks:
   private-network:
